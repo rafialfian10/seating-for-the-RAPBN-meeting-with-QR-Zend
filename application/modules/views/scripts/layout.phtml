@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>Sistem Informasi Administrasi Kepegawaian - DPR RI</title>
+<?=$this->headScript();?>
+<?=$this->headLink();?>
+</head>
+
+<?php
+	$peran = Zend_Auth::getInstance()->getIdentity()->peran;
+	$username = Zend_Auth::getInstance()->getIdentity()->nama;
+?>
+
+<body>
+	<div id="container">
+		<!-- header -->
+		<div id="header">
+			<div id="top"></div>
+			<div id="nav-bar">        
+				<div id="topnav-bar">
+					<div id="topleft">
+						<ul id="topnav">
+							<li><a class="home" href="/admin"><img src="<?=$this->url_statik;?>/images/admin/logoapp-<?=$this->domain;?>.png"></a></li>
+						</ul>
+					</div>
+					<div id="topright">
+						<ul id="topnav">
+							<!--
+							<li class="searchContainer">
+								<form action="/search" method="get">					
+								<div id="search">
+									<input name="s" value="1" type="hidden">
+									<input name="q" id="box_search" class="off-focus idleField" type="text">
+								</div>
+								</form>
+							</li>
+							-->
+							<li><a href="/login/logout">Log Out</a></li>
+							<li id="help"><a href="http://portal.dpr.go.id">&nbsp;Portal&nbsp;</a></li>
+						</ul>
+					</div>
+				</div>			
+			</div>
+		</div>
+		<!-- header -->
+
+		<!-- content -->
+		<div id="content-container">
+			<div id="left-block" class="left">
+				<div id="personal">
+					<h4>
+							Nama: <strong> <?=$username ?></strong>
+						</h4>	    		
+					<h4>
+							Peran: <strong><?=$peran ?></strong>
+						</h4>	    		
+			</div>
+				<div id="content-left">        
+					<div class="menu">
+						<? //if ($peran == "admin") { ?>
+							<h1 id="project_tab" class="UI_Action_Bar">
+								Data Master
+							</h1>
+							<ul>
+								<li>
+									<span class="action right timespan">
+										<a title="Tambah Denah Tempat Duduk" class="tt_atas" href="/sidang/denah-duduk/add">
+											<span class="add"></span>
+										</a>
+									</span>
+									<a href="/sidang/denah-duduk/index">Daftar Denah Tempat Duduk</a>
+								</li>
+							</ul>
+							<h1 id="project_tab" class="UI_Action_Bar">
+								Data Gambar
+							</h1>
+							<ul>
+								<li>
+									<span class="action right timespan">
+										<a title="Tambah Sidang" class="tt_atas" href="/sidang/add">
+											<span class="add"></span>
+										</a>
+									</span>
+									<a href="/sidang/index" target="facebox">Daftar Sidang</a>
+								</li>
+							</ul>
+						
+						<? //} ?>
+						
+						<!--<h1 id="project_tab" class="UI_Action_Bar">
+							Data Laporan
+						</h1>
+						<ul>
+							<li>
+								<a href="/admin/laporan-kustom/index">Laporan Kustom</a>
+							</li>					
+						</ul>-->
+					</div>
+				</div>        
+			</div>
+
+			<div id="content-block" class="left">
+				<?=$this->layout()->content;?>
+			</div>
+		</div>
+		<div style="clear: both;"></div>
+		<!-- content -->
+
+		<!-- footer -->
+		<div id="footer">
+			<div style="clear: both;"></div>
+			<?=$this->copyright;?>
+		</div>
+		<!-- footer -->
+
+	</div>
+</body>
+</html>

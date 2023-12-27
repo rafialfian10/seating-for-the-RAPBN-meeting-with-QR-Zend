@@ -1,0 +1,829 @@
+<?php
+	$pan = '#85C1E9';
+	$demokrat = '#0000FF';
+	$nasdem = '#BB8FCE';
+	$golkar = '#F4D03F';
+	$pdip = '#E74C3C';
+	$gerindra = '#FFA704';
+	$pkb = '#7CFF82';
+	$pks = '#FFD9A3';
+	$ppp = '#017506';
+	$dpd = '#B2B2B2';
+
+	foreach($this->rows as $data) {
+		if($data->id_sidang == 1) {
+			$seat1[$data->kode] = $data->no_anggota;
+			$seat_sesi1[$data->kode] = $data->id_sidang;
+
+			if(stripos($data->fraksi_anggota, 'perjuangan')) {
+				$color1[$data->kode] = $pdip;
+			} else if(stripos($data->fraksi_anggota, 'karya')) {
+				$color1[$data->kode] = $golkar;
+			} else if(stripos($data->fraksi_anggota, 'gerakan')) {
+				$color1[$data->kode] = $gerindra;
+			} else if(stripos($data->fraksi_anggota, 'nasdem')) {
+				$color1[$data->kode] = $nasdem;
+			} else if(stripos($data->fraksi_anggota, 'kebangkitan')) {
+				$color1[$data->kode] = $pkb;
+			} else if(stripos($data->fraksi_anggota, 'demokrat')) {
+				$color1[$data->kode] = $demokrat;
+			} else if(stripos($data->fraksi_anggota, 'keadilan')) {
+				$color1[$data->kode] = $pks;
+			} else if(stripos($data->fraksi_anggota, 'amanat')) {
+				$color1[$data->kode] = $pan;
+			} else if(stripos($data->fraksi_anggota, 'persatuan')) {
+				$color1[$data->kode] = $ppp;
+			} else if(stripos($data->fraksi_anggota, 'daerah')) {
+				$color1[$data->kode] = $dpd;
+			} else {
+				$color1[$data->kode] = '#000';
+			}
+		}
+
+		if($data->id_sidang == 2) {
+			$seat2[$data->kode] = $data->no_anggota;
+			$seat_sesi2[$data->kode] = $data->id_sidang;
+
+			if(stripos($data->fraksi_anggota, 'perjuangan')) {
+				$color2[$data->kode] = $pdip;
+			} else if(stripos($data->fraksi_anggota, 'karya')) {
+				$color2[$data->kode] = $golkar;
+			} else if(stripos($data->fraksi_anggota, 'gerakan')) {
+				$color2[$data->kode] = $gerindra;
+			} else if(stripos($data->fraksi_anggota, 'nasdem')) {
+				$color2[$data->kode] = $nasdem;
+			} else if(stripos($data->fraksi_anggota, 'kebangkitan')) {
+				$color2[$data->kode] = $pkb;
+			} else if(stripos($data->fraksi_anggota, 'demokrat')) {
+				$color2[$data->kode] = $demokrat;
+			} else if(stripos($data->fraksi_anggota, 'keadilan')) {
+				$color2[$data->kode] = $pks;
+			} else if(stripos($data->fraksi_anggota, 'amanat')) {
+				$color2[$data->kode] = $pan;
+			} else if(stripos($data->fraksi_anggota, 'persatuan')) {
+				$color2[$data->kode] = $ppp;
+			} else if(stripos($data->fraksi_anggota, 'daerah')) {
+				$color2[$data->kode] = $dpd;
+			} else {
+				$color2[$data->kode] = '#000';
+			}
+		}
+	}
+?>
+
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+<link rel="stylesheet" href="https://berkas.dpr.go.id/mooc/assets/css/denah-tempat-duduk.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jsbarcode/3.11.3/JsBarcode.all.min.js"></script>
+<script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+
+<!-- dropdown & search -->
+<section class="position-fixed d-flex flex-row py-3 bg-light" style="width: 100%; height: 70px; top: 0;">
+	<!-- blok -->
+	<div class="dropdown m-0 ms-5 me-5" style="width: 10%; height: 100%;">
+	  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+		Search Blok
+	  </button>
+	  <ul class="dropdown-menu">
+		<li><a href="#blok-f" class="dropdown-item page-scroll border-0">Blok F</a></li>
+		<li><a href="#blok-c1" class="dropdown-item page-scroll border-0">Blok C1</a></li>
+		<li><a href="#blok-c2" class="dropdown-item page-scroll border-0">Blok C2</a></li>
+		<li><a href="#blok-c3" class="dropdown-item page-scroll border-0">Blok C3</a></li>
+		<li><a href="#blok-c4" class="dropdown-item page-scroll border-0">Blok C4</a></li>
+		<li><a href="#blok-d" class="dropdown-item page-scroll border-0">Blok D</a></li>
+	  </ul>
+	</div>
+
+	<!-- sesi -->
+	<div class="dropdown m-0 me-3" style="width: 10%; height: 100%;">
+		<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+			Sesi
+		</button>
+		<ul class="dropdown-menu">
+			<li><button type="button" class="dropdown-item btn-sesi border-0" data-bs-target="sesi-1">Sesi 1</button></li>
+			<li><button type="button" class="dropdown-item btn-sesi border-0" data-bs-target="sesi-2">Sesi 2</button></li>
+		</ul>
+	</div>
+
+	<!-- search -->
+	<div class="me-2" style="width: 30%;">
+		<div class="d-flex align-items-center" style="height: 100%;" >
+			<input type="text" id="search-seat-input" class="ps-3 border border-secondary border-2" style="width: 70%; height: 100%; border-radius: 5px 0 0 5px; outline: grey;" placeholder="Search number seat" />
+			<button type="submit" id="search-seat-button" class="border border-secondary bg-secondary text-light" style="width: 120px; height: 100%; border-radius: 0 5px 5px 0;">Search</button>
+		</div>
+	</div>
+
+	<!-- show detail all seat -->
+	<div class="d-flex justify-content-end pe-5" style="width: 60%; height: 100%;">
+		<button type="button" class="view-popup-detail-seat border border-secondary bg-secondary text-light rounded-3" style="width: 150px; height: 100%;">Show Detail Seat</button>
+	</div>
+</section>
+<!-- end dropdown & search -->
+
+<!-- sesi 1 -->
+<section id="sesi-1" class="sesi">
+	<!-- pan & demokrat -->
+	<section id="blok-f" class="blok-f mt-5 pt-5">
+		<div class="mb-2">
+			<p class="text-center m-0 fs-3 fw-bold">Blok F</p>
+		</div>
+		<div dir="rtl">
+			<?php
+				$f = array(null, 10,12,13,14,8,8,9,9,9,8,8,7,7,5,4,3);
+				for($baris = 1; $baris <= 16; $baris++) {
+					for($kolom = $f[$baris]; $kolom >= 1; $kolom--) {
+						if ($kolom == $f[$baris]) {
+							echo '<div class="m-auto mb-1 d-flex gap-1" style="max-width: 90vw; padding-right: 0%;">';
+						}
+						
+						if ($baris <= 14) {
+							$pan_demokrat = 'F.' . $baris . '.' . $kolom;
+							echo '<div class="seat-number text-center rounded-2" style="width: 3.5rem; height: 3.5rem; line-height: 3.5rem; display: table-cell; background-color:'.$color1[$pan_demokrat].';">' .
+								'<p class="m-0 px-1 text-decoration-none text-dark" style="font-size: 12px;">' . $seat1[$pan_demokrat] . '</p>' .
+								'<span class="m-0 px-1 opacity-0" style="font-size: 12px;">' . $seat_sesi1[$pan_demokrat] . '</span>' .
+							'</div>';
+						} else {
+							echo '<div class="text-center rounded-2" style="width: 3.5rem; height: 3.5rem; line-height: 3.5rem; display: table-cell; background-color: #666666;">
+								<p class="m-0 px-1" style="font-size: 12px;">E</p>
+							</div>';
+						}
+						
+						if ($kolom == 1) {
+							echo '</div>';
+						}	
+					}
+				}
+			?>
+		</div>
+	</section>
+	<!-- end pan & demokrat -->
+	
+	<!-- nasdem -->
+	<section id="blok-c1" class="blok-c1 mt-5 pt-5">
+		<div class="mb-2">
+			<p class="text-center m-0 fs-3 fw-bold">Blok C1</p>
+		</div>
+		<div dir="rtl">
+			<?php
+				$c1 = array(null, 6,7,8,8,8,9,9,9,10,10,10,11,11,11,11,11,9);
+				for($baris = 1; $baris <= 17; $baris++) {
+					for($kolom = $c1[$baris]; $kolom >= 1; $kolom--) {
+						if ($kolom == $c1[$baris]) {
+							echo '<div class="m-auto mb-1 d-flex gap-1" style="max-width: 90vw; padding-right: 0%">';
+						}
+						
+						if ($baris <= 14) {
+							$nasdem = 'C1.' . $baris . '.' . $kolom;
+							echo '<div class="seat-number text-center rounded-2" style="width: 3.5rem; height: 3.5rem; line-height: 3.5rem; display: table-cell; background-color:'.$color1[$nasdem].';">' .
+								'<p class="m-0 px-1" style="font-size: 12px;">' . $seat1[$nasdem] . '</p>' .
+								'<span class="m-0 px-1 opacity-0" style="font-size: 12px;">' . $seat_sesi1[$nasdem] . '</span>' .
+							'</div>';
+						} else {
+							echo '<div class="text-center rounded-2" style="width: 3.5rem; height: 3.5rem; line-height: 3.5rem; display: table-cell; background-color: #666666;">
+								<p class="m-0 px-1" style="font-size: 12px;">E</p>
+							</div>';
+						}
+						
+						if ($kolom == 1) {
+							echo '</div>';
+						}		
+					}
+				}
+			?>
+		</div>
+	</section>
+	<!-- end nasdem -->
+	
+	<!-- pdip -->
+	<section id="blok-c2" class="blok-c2 mt-5 pt-5">
+		<div class="mb-2">
+			<p class="text-center m-0 fs-3 fw-bold">Blok C2</p>
+		</div>
+		<div dir="rtl">
+			<?php
+				$c2 = array(null, 6,7,7,8,8,9,9,9,10,10,10,10,11,11,11,12,9);
+				for($baris = 1; $baris <= 17; $baris++) {
+					for($kolom = $c2[$baris]; $kolom >= 1; $kolom--) {
+						if ($kolom == $c2[$baris]) {
+							echo '<div class="m-auto mb-1 d-flex gap-1" style="max-width: 90vw; padding-right: 0%;">';
+						}
+						
+						if ($baris <= 14) {
+							$golkar = 'C2.' . $baris . '.' . $kolom;
+							echo '<div class="seat-number text-center rounded-2" style="width: 3.5rem; height: 3.5rem; line-height: 3.5rem; display: table-cell; background-color:'.$color1[$golkar].';">' .
+								'<p class="m-0 px-1" style="font-size: 12px;">' . $seat1[$golkar] . '</p>' .
+								'<span class="m-0 px-1 opacity-0" style="font-size: 12px;">' . $seat_sesi1[$golkar] . '</span>' .
+							'</div>';
+						} else {
+							echo '<div class="text-center rounded-2" style="width: 3.5rem; height: 3.5rem; line-height: 3.5rem; display: table-cell; background-color: #666666;">
+								<p class="m-0 px-1" style="font-size: 12px;">E</p>
+							</div>';
+						}
+						
+						if ($kolom == 1) {
+							echo '</div>';
+						}		
+					}
+				}
+			?>
+		</div>
+	</section>
+	<!-- end pdip -->
+
+	<!-- <section class="mt-5 d-flex align-items-center" style="padding-top: 120px;">
+		<img src="<?=$this->url_berkas;?>/arrow.jpg" style="width: 50px; height: 100%;">
+	</section> -->
+	
+	<!-- dpd -->
+	<section id="blok-c3" class="blok-c3 mt-5 pt-5">
+		<div class="mb-2">
+			<p class="text-center m-0 fs-3 fw-bold">Blok C3</p>
+		</div>
+		<div>
+			<?php
+				$c3 = array(null, 6,8,8,8,8,9,9,9,9,10,11,11,11,11,11,12,9);
+				for($baris = 1; $baris <= 17; $baris++) {
+					for($kolom = 1; $kolom <= $c3[$baris]; $kolom++) {
+						if ($kolom == 1) {
+							echo '<div class="m-auto mb-1 d-flex gap-1" style="max-width: 90vw; padding-left: 0%;">';
+						}
+						
+						if ($baris <= 14) {
+							$dpd = 'C3.' . $baris . '.' . $kolom;
+							echo '<div class="seat-number text-center rounded-2" style="width: 3.5rem; height: 3.5rem; line-height: 3.5rem; display: table-cell; background-color:'.$color1[$dpd].';">' .
+								'<p class="m-0 px-1" style="font-size: 12px;">' . $seat1[$dpd] . '</p>' .
+								'<span class="m-0 px-1 opacity-0" style="font-size: 12px;">' . $seat_sesi1[$dpd] . '</span>' .
+							'</div>';
+						} else {
+							echo '<div class="text-center rounded-2" style="width: 3.5rem; height: 3.5rem; line-height: 3.5rem; display: table-cell; background-color: #666666;">
+								<p class="m-0 px-1" style="font-size: 12px;">E</p>
+							</div>';
+						}
+						
+						if ($kolom == $c3[$baris]) {
+							echo '</div>';
+						}		
+					}
+				}
+			?>
+		</div>
+	</section>
+	<!-- end dpd -->
+	
+	<!-- gerindra -->
+	<section id="blok-c4" class="blok-c4 mt-5 pt-5">
+		<div class="mb-2">
+			<p class="text-center m-0 fs-3 fw-bold">Blok C4</p>
+		</div>
+		<div>
+			<?php
+				$c4 = array(null, 6,7,8,8,8,9,9,9,10,10,10,11,11,11,11,11,9);
+				for($baris = 1; $baris <= 17; $baris++) {
+					for($kolom = 1; $kolom <= $c4[$baris]; $kolom++) {
+						if ($kolom == 1) {
+							echo '<div class="m-auto mb-1 d-flex gap-1" style="max-width: 90vw; padding-left: 0%;">';
+						}
+						
+						if ($baris <= 11) {
+							$gerindra = 'C4.' . $baris . '.' . $kolom;
+							echo '<div class="seat-number text-center rounded-2" style="width: 3.5rem; height: 3.5rem; line-height: 3.5rem; display: table-cell; background-color:'.$color1[$gerindra].';">' .
+								'<p class="m-0 px-1" style="font-size: 12px;">' . $seat1[$gerindra] . '</p>' .
+								'<span class="m-0 px-1 opacity-0" style="font-size: 12px;">' . $seat_sesi1[$gerindra] . '</span>' .
+							'</div>';
+						} else {
+							echo '<div class="text-center rounded-2" style="width: 3.5rem; height: 3.5rem; line-height: 3.5rem; display: table-cell; background-color: #666666;">
+								<p class="m-0 px-1" style="font-size: 12px;">E</p>
+							</div>';
+						}
+						
+						if ($kolom == $c4[$baris]) {
+							echo '</div>';
+						}		
+					}
+				}
+			?>
+		</div>
+	</section>
+	<!-- end gerindra -->
+	
+	<!-- pkb, pks, ppp -->
+	<section id="blok-d" class="blok-d my-5 pt-5">
+		<div class="mb-2">
+			<p class="text-center m-0 fs-3 fw-bold">Blok D</p>
+		</div>
+		<div>
+			<?php
+				$d = array(null, 10,12,13,14,8,8,9,9,9,8,8,8,7,5,4,3);
+				for($baris = 1; $baris <= 16; $baris++) {
+					for($kolom = 1; $kolom <= $d[$baris]; $kolom++) {
+						if ($kolom == 1) {
+							echo '<div class="m-auto mb-1 d-flex gap-1" style="max-width: 90vw; padding-left: 0%;">';
+						}
+						
+						if ($baris <= 12) {
+							$pkb_pks_ppp = 'D.' . $baris . '.' . $kolom;
+							echo '<div class="seat-number text-center rounded-2" style="width: 3.5rem; height: 3.5rem; line-height: 3.5rem; display: table-cell; background-color:'.$color1[$pkb_pks_ppp].';">' .
+								'<p class="m-0 px-1" style="font-size: 12px;">' . $seat1[$pkb_pks_ppp] . '</p>' .
+								'<span class="m-0 px-1 opacity-0" style="font-size: 12px;">' . $seat_sesi1[$pkb_pks_ppp] . '</span>' .
+							'</div>';
+						} else {
+							echo '<div class="text-center rounded-2" style="width: 3.5rem; height: 3.5rem; line-height: 3.5rem; display: table-cell; background-color: #666666;">
+								<p class="m-0 px-1" style="font-size: 12px;">E</p>
+							</div>';
+						}
+						
+						if ($kolom == $d[$baris]) {
+							echo '</div>';
+						}		
+					}
+				}
+			?>
+		</div>
+	</section>
+	<!-- end pkb, pks, ppp -->
+
+	<!-- popup detail seat sesi 2 -->
+	<div class="popup-detail-seat-1">
+		<header>
+			<span><p class="title-detail-seat">Detail Seat Sesi 1</p></span>
+			<div class="close-popup-detail-seat-1"><i class="bi bi-x"></i></div>
+		</header>
+		<div class="content-detail-seat d-flex flex-column">
+			<img src="https://berkas.dpr.go.id/mooc/assets/images/sesi-1.png" alt="" class="m-0" style="width: 100%;" />
+		</div>
+	</div>
+	<!-- end popup detail seat sesi 1 -->
+</section>
+<!-- end sesi 1 -->
+
+<!-- sesi 2 -->
+<section id="sesi-2" class="sesi">
+	<!-- pan & demokrat -->
+	<section id="blok-f" class="blok-f mt-5 pt-5">
+		<div class="mb-2">
+			<p class="text-center m-0 fs-3 fw-bold">Blok F</p>
+		</div>
+		<div dir="rtl">
+			<?php
+				$f = array(null, 10,12,12,14,8,7,7,8,7,7,7,7,6,5,4,3);
+	
+				for($baris = 1; $baris <= 16; $baris++) {
+					for($kolom = $f[$baris]; $kolom >= 1; $kolom--) {
+						if ($kolom == $f[$baris]) {
+							echo '<div class="m-auto mb-1 d-flex gap-1" style="max-width: 90vw; padding-right: 0%;">';
+						}
+						
+						if ($baris <= 11) {
+							$pan_demokrat = 'F.' . $baris . '.' . $kolom;
+							echo '<div class="seat-number text-center rounded-2" style="width: 3.5rem; height: 3.5rem; line-height: 3.5rem; display: table-cell; background-color:'.$color2[$pan_demokrat].';">' .
+								'<p class="m-0 px-1" style="font-size: 12px;">' . $seat2[$pan_demokrat] . '</p>' .
+								'<span class="m-0 px-1 opacity-0" style="font-size: 12px;">' . $seat_sesi2[$pan_demokrat] . '</span>' .
+							'</div>';
+						} else {
+							echo '<div class="text-center rounded-2" style="width: 3.5rem; height: 3.5rem; line-height: 3.5rem; display: table-cell; background-color: #666666;">
+								<p class="m-0 px-1" style="font-size: 12px;">E</p>
+							</div>';
+						}
+						
+						if ($kolom == 1) {
+							echo '</div>';
+						}	
+					}
+				}
+			?>
+		</div>
+	</section>
+	<!-- end pan & demokrat -->
+	
+	<!-- nasdem -->
+	<section id="blok-c1" class="blok-c1 mt-5 pt-5">
+		<div class="mb-2">
+			<p class="text-center m-0 fs-3 fw-bold">Blok C1</p>
+		</div>
+		<div dir="rtl">
+			<?php
+				$c1 = array(null, 6,7,8,8,8,9,9,9,9,10,10,10,11,9,11,11,9);
+				for($baris = 1; $baris <= 17; $baris++) {
+					for($kolom = $c1[$baris]; $kolom >= 1; $kolom--) {
+						if ($kolom == $c1[$baris]) {
+							echo '<div class="m-auto mb-1 d-flex gap-1" style="max-width: 90vw; padding-right: 0%">';
+						}
+						
+						if ($baris <= 14) {
+							$nasdem = 'C1.' . $baris . '.' . $kolom;
+							echo '<div class="seat-number text-center rounded-2" style="width: 3.5rem; height: 3.5rem; line-height: 3.5rem; display: table-cell; background-color:'.$color2[$nasdem].';">' .
+								'<p class="m-0 px-1" style="font-size: 12px;">' . $seat2[$nasdem] . '</p>' .
+								'<span class="m-0 px-1 opacity-0" style="font-size: 12px;">' . $seat_sesi2[$nasdem] . '</span>' .
+							'</div>';
+						} else {
+							echo '<div class="text-center rounded-2" style="width: 3.5rem; height: 3.5rem; line-height: 3.5rem; display: table-cell; background-color: #666666;">
+								<p class="m-0 px-1" style="font-size: 12px;">E</p>
+							</div>';
+						}
+						
+						if ($kolom == 1) {
+							echo '</div>';
+						}		
+					}
+				}
+			?>
+		</div>
+	</section>
+	<!-- end nasdem -->
+	
+	<!-- golkar -->
+	<section id="blok-c2" class="blok-c2 mt-5 pt-5">
+		<div class="mb-2">
+			<p class="text-center m-0 fs-3 fw-bold">Blok C2</p>
+		</div>
+		<div dir="rtl">
+			<?php
+				$c2 = array(null, 6,7,7,8,8,9,9,9,10,10,10,10,11,11,11,11,9);
+				for($baris = 1; $baris <= 17; $baris++) {
+					for($kolom = $c2[$baris]; $kolom >= 1; $kolom--) {
+						if ($kolom == $c2[$baris]) {
+							echo '<div class="m-auto mb-1 d-flex gap-1" style="max-width: 90vw; padding-right: 0%;">';
+						}
+						
+						if ($baris <= 14) {
+							$golkar = 'C2.' . $baris . '.' . $kolom;
+							echo '<div class="seat-number text-center rounded-2" style="width: 3.5rem; height: 3.5rem; line-height: 3.5rem; display: table-cell; background-color:'.$color2[$golkar].';">' .
+								'<p class="m-0 px-1" style="font-size: 12px;">' . $seat2[$golkar] . '</p>' .
+								'<span class="m-0 px-1 opacity-0" style="font-size: 12px;">' . $seat_sesi2[$golkar] . '</span>' .
+							'</div>';
+						} else {
+							echo '<div class="text-center rounded-2" style="width: 3.5rem; height: 3.5rem; line-height: 3.5rem; display: table-cell; background-color: #666666;">
+								<p class="m-0 px-1" style="font-size: 12px;">E</p>
+							</div>';
+						}
+						
+						if ($kolom == 1) {
+							echo '</div>';
+						}		
+					}
+				}
+			?>
+		</div>
+	</section>
+	<!-- end golkar -->
+	
+	<!-- pdip -->
+	<section id="blok-c3" class="blok-c3 mt-5 pt-5 d-block">
+		<div class="mb-2">
+			<p class="text-center m-0 fs-3 fw-bold">Blok C3</p>
+		</div>
+		<div>
+			<?php
+				$c3 = array(null, 6,7,8,8,8,9,9,9,10,10,10,10,11,10,11,12,9);
+				for($baris = 1; $baris <= 17; $baris++) {
+					for($kolom = 1; $kolom <= $c3[$baris]; $kolom++) {
+						if ($kolom == 1) {
+							echo '<div class="m-auto mb-1 d-flex gap-1" style="max-width: 90vw; padding-left: 0%;">';
+						}
+						
+						if ($baris <= 14) {
+							$pdip = 'C3.' . $baris . '.' . $kolom;
+							echo '<div class="seat-number text-center rounded-2" style="width: 3.5rem; height: 3.5rem; line-height: 3.5rem; display: table-cell; background-color:'.$color2[$pdip].';">' .
+								'<p class="m-0 px-1" style="font-size: 12px;">' . $seat2[$pdip] . '</p>' .
+								'<span class="m-0 px-1 opacity-0" style="font-size: 12px;">' . $seat_sesi2[$pdip] . '</span>' .
+							'</div>';
+						} else {
+							echo '<div class="text-center rounded-2" style="width: 3.5rem; height: 3.5rem; line-height: 3.5rem; display: table-cell; background-color: #666666;">
+								<p class="m-0 px-1" style="font-size: 12px;">E</p>
+							</div>';
+						}
+						
+						if ($kolom == $c3[$baris]) {
+							echo '</div>';
+						}		
+					}
+				}
+			?>
+		</div>
+	</section>
+	<!-- end pdip -->
+	
+	<!-- gerindra -->
+	<section id="blok-c4" class="blok-c4 mt-5 pt-5">
+		<div class="mb-2">
+			<p class="text-center m-0 fs-3 fw-bold">Blok C4</p>
+		</div>
+		<div>
+			<?php
+				$c4 = array(null, 6,7,8,8,8,8,9,9,10,10,9,11,10,8,11,11,9);
+				for($baris = 1; $baris <= 17; $baris++) {
+					for($kolom = 1; $kolom <= $c4[$baris]; $kolom++) {
+						if ($kolom == 1) {
+							echo '<div class="m-auto mb-1 d-flex gap-1" style="max-width: 90vw; padding-left: 0%;">';
+						}
+						
+						if ($baris <= 12) {
+							$gerindra = 'C4.' . $baris . '.' . $kolom;
+							echo '<div class="seat-number text-center rounded-2" style="width: 3.5rem; height: 3.5rem; line-height: 3.5rem; display: table-cell; background-color:'.$color2[$gerindra].';">' .
+								'<p class="m-0 px-1" style="font-size: 12px;">' . $seat2[$gerindra] . '</p>' .
+								'<span class="m-0 px-1 opacity-0" style="font-size: 12px;">' . $seat_sesi2[$gerindra] . '</span>' .
+							'</div>';
+						} else {
+							echo '<div class="text-center rounded-2" style="width: 3.5rem; height: 3.5rem; line-height: 3.5rem; display: table-cell; background-color: #666666;">
+								<p class="m-0 px-1" style="font-size: 12px;">E</p>
+							</div>';
+						}
+						
+						if ($kolom == $c4[$baris]) {
+							echo '</div>';
+						}		
+					}
+				}
+			?>
+		</div>
+	</section>
+	<!-- end gerindra -->
+	
+	<!-- pkb, pks, ppp -->
+	<section id="blok-d" class="blok-d my-5 pt-5">
+		<div class="mb-2">
+			<p class="text-center m-0 fs-3 fw-bold">Blok D</p>
+		</div>
+		<div>
+			<?php
+				$d = array(null, 9,12,13,14,7,8,8,7,7,7,5,5,7,5,4,3);
+				for($baris = 1; $baris <= 16; $baris++) {
+					for($kolom = 1; $kolom <= $d[$baris]; $kolom++) {
+						if ($kolom == 1) {
+							echo '<div class="m-auto mb-1 d-flex gap-1" style="max-width: 90vw; padding-left: 0%;">';
+						}
+						
+						if ($baris <= 12) {
+							$pkb_pks_ppp = 'D.' . $baris . '.' . $kolom;
+							echo '<div class="seat-number text-center rounded-2" style="width: 3.5rem; height: 3.5rem; line-height: 3.5rem; display: table-cell; background-color:'.$color2[$pkb_pks_ppp].';">' .
+								'<p class="m-0 px-1" style="font-size: 12px;">' . $seat2[$pkb_pks_ppp] . '</p>' .
+								'<span class="m-0 px-1 opacity-0" style="font-size: 12px;">' . $seat_sesi2[$pkb_pks_ppp] . '</span>' .
+							'</div>';
+						} else {
+							echo '<div class="text-center rounded-2" style="width: 3.5rem; height: 3.5rem; line-height: 3.5rem; display: table-cell; background-color: #666666;">
+								<p class="m-0 px-1" style="font-size: 12px;">E</p>
+							</div>';
+						}
+						
+						if ($kolom == $d[$baris]) {
+							echo '</div>';
+						}		
+					}
+				}
+			?>
+		</div>
+	</section>
+	<!-- end pkb, pks, ppp -->
+
+	<!-- popup detail seat sesi 2 -->
+	<div class="popup-detail-seat-2">
+		<header>
+			<span><p class="title-detail-seat">Detail Seat Sesi 2</p></span>
+			<div class="close-popup-detail-seat-2"><i class="bi bi-x"></i></div>
+		</header>
+		<div class="content-detail-seat d-flex flex-column">
+			<img src="https://berkas.dpr.go.id/mooc/assets/images/sesi-2.png" alt="" class="m-0" style="width: 100%;" />
+		</div>
+	</div>
+	<!-- end popup detail seat sesi 2 -->
+</section>
+<!-- end sesi 2 -->
+
+<!-- info -->
+<!-- <section class="d-flex justify-content-center m-auto" style="max-width: 90vw; margin:auto; padding-top: 200px;">
+	<div class="me-5">
+		<div class="mb-5 py-1 px-2 d-flex justify-content-start align-items-center text-light" style="width: 100%;">
+			<p class="m-0 px-3 rounded-4 text-start" style="width: 100%; font-size: 50px; background-color: #85C1E9;">Fraksi Partai Amanat Nasional</p>
+		</div>
+		<div class="mb-5 py-1 px-2 d-flex justify-content-start align-items-center text-light" style="width: 100%;">
+			<p class="m-0 px-3 rounded-4 text-start" style="width: 100%; font-size: 50px; background-color: #0000FF;">Fraksi Partai Demokrat</p>
+		</div>
+		<div class="mb-5 py-1 px-2 d-flex justify-content-start align-items-center text-light" style="width: 100%;">
+			<p class="m-0 px-3 rounded-4 text-start" style="width: 100%; font-size: 50px; background-color: #BB8FCE;">Fraksi Partai NasDem</p>
+		</div>
+	</div>
+	<div class="me-5">
+		<div class="mb-5 py-1 px-2 d-flex justify-content-start align-items-center text-light" style="width: 100%;">
+			<p class="m-0 px-3 rounded-4 text-start" style="width: 100%; font-size: 50px; background-color: #FDFD02;">Fraksi Partai Golongan Karya</p>
+		</div>
+		<div class="mb-5 py-1 px-2 d-flex justify-content-start align-items-center text-light" style="width: 100%;">
+			<p class="m-0 px-3 rounded-4 text-start" style="width: 100%; font-size: 50px; background-color: #E74C3C;">Fraksi Partai Demokrasi Indonesia Perjuangan</p>
+		</div>
+		<div class="mb-5 py-1 px-2 d-flex justify-content-start align-items-center text-light" style="width: 100%;">
+			<p class="m-0 px-3 rounded-4 text-start" style="width: 100%; font-size: 50px; background-color: #FFA704;">Fraksi Partai Gerakan Indonesia Raya</p>
+		</div>
+	</div>
+	<div class="me-5">
+		<div class="mb-5 py-1 px-2 d-flex justify-content-start align-items-center text-light" style="width: 100%;">
+			<p class="m-0 px-3 rounded-4 text-start" style="width: 100%; font-size: 50px; background-color: #7CFF82;">Fraksi Partai Kebangkitan Bangsa</p>
+		</div>
+		<div class="mb-5 py-1 px-2 d-flex justify-content-start align-items-center text-light" style="width: 100%;">
+			<p class="m-0 px-3 rounded-4 text-start" style="width: 100%; font-size: 50px; background-color: #FFD9A3;">Fraksi Partai Keadilan Sejahtera</p>
+		</div>
+		<div class="mb-5 py-1 px-2 d-flex justify-content-start align-items-center text-light" style="width: 100%;">
+			<p class="m-0 px-3 rounded-4 text-start" style="width: 100%; font-size: 50px; background-color: #017506;">Fraksi Partai Persatuan Pembangunan</p>
+		</div>
+	</div>
+	<div>
+		<div class="mb-5 py-1 px-2 d-flex justify-content-start align-items-center text-light" style="width: 100%;">
+			<p class="m-0 px-3 rounded-4 text-start" style="width: 100%; font-size: 50px; background-color: #B2B2B2;">Dewan Perwakilan Daerah</p>
+		</div>
+	</div>
+</section> -->
+<!-- end info -->
+
+<!-- barcode -->
+<!-- <div class="content">
+	<input type="text" id="text">
+	<div id="qrcode"></div>
+	<button id="btn">Generate</button>
+</div> -->
+<!-- end barcode -->
+  
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+
+<script>
+	// scroll blok
+	$('.page-scroll').on('click', function(e){
+		e.preventDefault();
+
+		let seats = document.querySelectorAll('.blok-f, .blok-c1, .blok-c2, .blok-c3, .blok-c4, .blok-d');
+		seats.forEach(function (seat) {
+			seat.style.display = 'block';
+            let seatNumbers = seat.querySelectorAll('.seat-number p');
+
+			seatNumbers.forEach(function (seatNumber) {
+				seatNumber.classList.remove('highlighted');
+				seatNumber.style.color = 'black';
+			});
+        });
+
+		let searchInput = document.getElementById('search-seat-input');
+		searchInput.value = "";
+		
+		let tujuan = $(this).attr('href');
+		let elemenTujuan = $(tujuan);  
+
+		$('body').animate({
+			scrollTop: elemenTujuan.offset().top - 50
+		});
+	});
+	// end scroll blok
+
+	// search 
+	let searchInput = document.getElementById('search-seat-input');
+    let searchButton = document.getElementById('search-seat-button');
+	let errorMessageDisplayed = false; // menandakan apakah pesan error sudah ditampilkan
+	let baseUrl = '<?= $this->baseUrl; ?>';
+
+    searchButton.addEventListener('click', function () {
+        let searchSeat = searchInput.value.trim().toLowerCase();
+        let seats = document.querySelectorAll('.blok-f, .blok-c1, .blok-c2, .blok-c3, .blok-c4, .blok-d');
+		let seatFound = false;
+
+        seats.forEach(function (seat) {
+            let seatNumbers = seat.querySelectorAll('.seat-number p');
+            let showSeat = false;
+
+			seatNumbers.forEach(function (seatNumber) {
+				let seatNumberAnggota = seatNumber.textContent.trim().toLowerCase();
+				
+				if (seatNumberAnggota === searchSeat) {
+					seatNumber.classList.add('highlighted', 'text-light', 'rounded-2');
+					showSeat = true;
+					seatFound = true;
+				} else {
+					seatNumber.classList.remove('highlighted', 'text-light');
+				}
+			});
+
+			if (showSeat) {
+				seat.style.display = 'block';
+			} else {
+				seat.style.display = 'none';
+				let errorMessage = document.querySelector('.error-message');
+				if (errorMessage) {
+					errorMessage.remove();
+					errorMessageDisplayed = false;
+				}
+			}
+        });
+
+		if (!seatFound && !errorMessageDisplayed) {
+			let errorMessage = document.createElement("p");
+			errorMessage.classList.add('error-message', 'fs-5', 'text-center', 'text-danger', 'fst-italic');
+			errorMessage.style.paddingTop = '230px';
+			errorMessage.innerHTML = "Seat not found";
+			document.body.appendChild(errorMessage);
+			errorMessageDisplayed = true;
+		}
+
+		// Mengubah URL saat melakukan pencarian
+		let seatSesis = document.querySelectorAll('.sesi');
+		seatSesis.forEach(function(sesi) {
+			let computedStyle = window.getComputedStyle(sesi);
+			if (computedStyle.display === 'block') {
+				let seatNumberSesi = sesi.querySelector('.seat-number span').textContent.trim().toLowerCase();
+				let newUrl = `${baseUrl}/index/seat/no-anggota/${searchSeat}/sesi/${seatNumberSesi}`;
+				history.pushState(null, null, newUrl);
+			}
+		});
+    });
+	// end search
+
+	// filter sesi
+	let btnSesi = document.querySelectorAll('.btn-sesi');
+	let sesi1Section = document.getElementById('sesi-1');
+	let sesi2Section = document.getElementById('sesi-2');
+	let seats = document.querySelectorAll('.blok-f, .blok-c1, .blok-c2, .blok-c3, .blok-c4, .blok-d');
+
+	sesi1Section.style.display = 'block';
+	sesi2Section.style.display = 'none';
+
+	btnSesi.forEach(function (item) {
+		item.addEventListener('click', function () {
+			searchInput.value = "";
+			let targetSection = document.getElementById(item.getAttribute('data-bs-target'));
+
+			if (targetSection.id === 'sesi-1') {
+				sesi1Section.style.display = 'block';
+				sesi2Section.style.display = 'none';
+			} else if (targetSection.id === 'sesi-2') {
+				sesi2Section.style.display = 'block';
+				sesi1Section.style.display = 'none';
+			}
+
+			seats.forEach(function (seat) {
+				let seatNumbers = seat.querySelectorAll('.seat-number p');
+
+				seatNumbers.forEach(function (seatNumber) {
+				seatNumber.classList.remove('highlighted', 'text-light');
+				});
+			});
+
+			let searchSeat = searchInput.value.trim().toLowerCase();
+			let seatFound = false;
+
+			seats.forEach(function (seat) {
+				let seatNumbers = seat.querySelectorAll('.seat-number p');
+				let showSeat = false;
+
+				seatNumbers.forEach(function (seatNumber) {
+				let seatNumberAnggota = seatNumber.textContent.trim().toLowerCase();
+
+				if (seatNumberAnggota === searchSeat) {
+					showSeat = true;
+					seatFound = true;
+					seatNumber.classList.add('highlighted', 'text-light', 'rounded-2');
+				} else {
+					seatNumber.classList.remove('highlighted', 'text-light');
+				}
+				});
+
+				if (showSeat) {
+					seat.style.display = 'block';
+				} else {
+					seat.style.display = 'none';
+					let errorMessage = document.querySelector('.error-message');
+					if (errorMessage) {
+						errorMessage.remove();
+						errorMessageDisplayed = false;
+					}	
+				}
+			});
+
+			if (!seatFound && !errorMessageDisplayed) {
+				let errorMessage = document.createElement("p");
+				errorMessage.classList.add('error-message', 'fs-5', 'text-center', 'text-danger', 'fst-italic');
+				errorMessage.style.paddingTop = '230px';
+				errorMessage.innerHTML = "Seat not found";
+				document.body.appendChild(errorMessage);
+				errorMessageDisplayed = true;
+			}
+		});
+	});
+	// end filter sesi
+
+	// popup detail seat sesi 1 & sesi 2
+	const viewPopupDetailSeat = document.querySelector(".view-popup-detail-seat");
+    const popupDetailSeatSesi1 = document.querySelector(".popup-detail-seat-1");
+    const closePopupDetailSeatSesi1 = popupDetailSeatSesi1.querySelector(".close-popup-detail-seat-1");
+    const popupDetailSeatSesi2 = document.querySelector(".popup-detail-seat-2");
+    const closePopupDetailSeatSesi2 = popupDetailSeatSesi2.querySelector(".close-popup-detail-seat-2");
+
+    viewPopupDetailSeat.onclick = () => {
+        popupDetailSeatSesi1.classList.toggle("show");
+		popupDetailSeatSesi2.classList.toggle("show");
+    }
+
+    closePopupDetailSeatSesi1.onclick = () => {
+        viewPopupDetailSeat.click();
+    }
+
+    closePopupDetailSeatSesi2.onclick = () => {
+        viewPopupDetailSeat.click();
+    }
+	// end popup detail seat sesi 1 & sesi 2
+</script>
+

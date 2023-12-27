@@ -1,0 +1,39 @@
+<?php
+    include "phpqrcode/qrlib.php"; 
+
+    $this->DenahTempatDudukService = new DenahTempatDudukService();
+    $undangan = $this->DenahTempatDudukService->getData($this->undangan->id);
+
+    $qr = $undangan->undangan;
+
+    $penyimpanan = "temp/";
+
+    if (!file_exists($penyimpanan))
+        mkdir($penyimpanan);
+
+    QRcode::png($qr, $penyimpanan."qrcode_saya.png"); 
+
+    $file_undangan = '<div style="width: 100%; height: 700px; display: flex; justify-content: center;">
+                        <div style="width: 50%; height: 100%; position: relative; margin: auto; border-radius: 10px; overflow: hidden;">
+                            <img src="https://berkas.dpr.go.id/mooc/assets/images/bg-undangan1.jpg" alt="bg-undangan1" class="position-absolute" style="width: 100%; height: 100%;">
+                            <div style="width: 100%; position: absolute; padding: 100px 50px;">
+                                <p style="width: 100%; text-align: center; font-size: 26px; font-weight: bold; color: white;">Undangan Rapat RAPBN</p>
+                                <p style="margin: 5px 0px; font-size: 17px; color: white;">Nama : '. $undangan->nama_anggota .'</p>
+                                <p style="margin: 5px 0px; font-size: 17px; color: white;">Sesi : '. $undangan->id_sidang .'</p>
+                                <p style="margin: 5px 0px; font-size: 17px; color: white;">Nomor : '. $undangan->no_anggota .'</p>
+                                <p style="margin: 5px 0px; font-size: 17px; color: white;">Fraksi : '. $undangan->fraksi_anggota .'</p>
+                                <p style="margin: 5px 0px; font-size: 17px; color: white;">Lembaga : '. $undangan->lembaga .'</p>
+                                <p style="margin: 5px 0px; font-size: 17px; color: white;">Kode : '. $undangan->kode .'</p>
+                            </div>
+
+                            <div style="width: 100%; position: absolute; text-align: center; margin-top: 380px;">
+                                <img src="'.$penyimpanan.'qrcode_saya.png" style="width: 180px; height: 180px;">
+                                <div style="width: 170px; margin: 20px -55px; padding: 10px; font-size: 20px; background: white; border-radius: 10px; display: inline-block;">Scan Me</div>
+                            </div>
+                        </div>
+                    </div>';
+
+    $html2pdf = new HTML2PDF('L','A4','en');
+    $html2pdf->WriteHTML($file_undangan);
+    $html2pdf->Output('Undangan-Rapat-RAPBN-'. $undangan->nama_anggota .'.pdf');         
+?>

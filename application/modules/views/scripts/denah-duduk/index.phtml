@@ -1,0 +1,70 @@
+<script type="text/javascript">
+$(function(){
+	$("table")
+		.tablesorter({theme: 'blue', widthFixed: true, widgets: ['zebra', 'filter']})
+		.tablesorterPager({container: $(".pager"), 
+							output: '{startRow} - {endRow} / {filteredRows} ({totalRows})', 
+							fixedHeight: true, 
+							removeRows: false, 
+							cssGoto: '.gotoPage' });
+});
+</script>
+
+<div class="content-header"></div>
+<div class="UI_Header_Title">
+	<h1><?=$this->avatar;?>  Daftar Denah Tempat Duduk</h1>
+	<div class="header_nav_links">
+		<span class="right context_menu"><a href="/sidang/denah-duduk/add" class="UIlink-button small right">Tambah Denah Tempat Duduk</a></span>
+	</div>
+</div>
+<div class="clear"></div>
+<br>
+<? if (count($this->rows) > 0) { ?>
+	<?=$this->pager;?>
+
+	<table class="tablesorter">
+		<thead>
+			<tr>
+				<th align="center">Seat</th>
+				<th align="center">Kode</th>
+				<th align="center">Blok</th>
+				<th align="center">Baris</th>
+				<th align="center">Kursi</th>
+				<th align="center">Nama Anggota</th>
+				<th align="center">No Anggota</th>
+				<th align="center">Fraksi</th>
+				<th align="center">Lembaga</th>
+				<th align="center">Undangan</th>
+				<th align="center">Aksi</th>
+			</tr>
+		</thead>
+		<tbody>
+		<?php
+			foreach($this->rows as $row) {
+				echo '<tr>';
+				echo '<td align="center">'.$row->seat . '</td>';
+				echo '<td align="center">'.$row->kode . '</td>';
+				echo '<td align="center">'.$row->blok . '</td>';
+				echo '<td align="center">'.$row->baris . '</td>';
+				echo '<td align="center">'.$row->kursi . '</td>';
+				echo '<td>'.$row->nama_anggota . '</td>';
+				echo '<td align="center">'.$row->no_anggota . '</td>';
+				echo '<td align="center">'.$row->fraksi_anggota . '</td>';
+				echo '<td align="center">'.$row->lembaga . '</td>';
+				echo '<td align="center"><a href="/sidang/index/undangan/no-anggota/'.$row->id.'" target="_blank">Download</a>';
+				echo'</td>';
+				echo '<td align="center"><a href="/sidang/denah-duduk/edit/id/'.$row->id.'">EDIT</a>';
+				if ($this->getRole() == 'admin' || $this->getRole() == 'super') {
+					echo '&nbsp;|&nbsp;<a href="/sidang/denah-duduk/delete/id/'.$row->id.'" onclick="return confirmDelete();">DELETE</a>';
+				}
+				echo '</td>';
+				echo '</tr>';
+			}
+		?>
+		
+		</tbody>
+	</table>
+<? } else {
+	echo 'Data tidak ditemukan.';
+}
+?>

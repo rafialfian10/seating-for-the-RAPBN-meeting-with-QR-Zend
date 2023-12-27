@@ -1,0 +1,148 @@
+<script type="text/javascript">
+	$(function() {
+		$("#compose").validate();
+	});
+
+	// $(document).ready(function() {
+	// 		$('#blok').change(function() {
+	// 		var blok = $('#blok').val();
+	// 		$.ajax({
+	// 			type: "GET",
+	// 			url: "/admin/denah-duduk/get-baris",
+	// 			data: "blok=" + blok,
+	// 			success: function(msg) {
+	// 				$('#baris').html(msg);
+	// 			}
+	// 		});
+	// 	});
+	// });
+
+	function selectFields1(id, nama, no, fraksi) {
+		$('#id_anggota').val(id);
+		$('#nama_anggota').val(nama);
+		$('#no_anggota').val(no);
+		$('#fraksi_anggota').val(fraksi);
+		$.facebox.close();
+	}
+
+	function ClearFields1() {
+		document.getElementById("id_anggota").value = "";
+		document.getElementById("nama_anggota").value = "";
+		document.getElementById("no_anggota").value = "";
+		document.getElementById("fraksi_anggota").value = "";
+	}
+</script>
+
+<div class="content-header"></div>
+<div class="UI_Header_Title">
+	<h1><?= $this->avatar; ?> Tambah Denah Tempat Duduk</h1>
+	<div class="header_nav_links"><a href="/sidang/denah-duduk">Back to Daftar Denah Tempat Duduk</a></div>
+</div>
+<div class="clear"></div>
+<form id="compose" name="compose" method="post" action="" enctype="multipart/form-data">
+	<div class="tabular">
+		<p>
+			<label>Sesi</label>
+			<input class="required" type="text" id="id_sidang" autocomplete="disable" name="id_sidang"/>
+			<font color="red">*</font>
+		</p>
+
+		<p>
+			<label>Seat</label>
+			<input class="required" type="text" id="seat" autocomplete="disable" name="seat"/>
+			<font color="red">*</font>
+		</p>
+
+		<p>
+			<label>Kode</label>
+			<input class="required" type="text" id="kode" autocomplete="disable" name="kode"/>
+			<font color="red">*</font>
+		</p>
+
+		<p>
+			<label>Blok</label>
+			<select class="required" id="blok" name="blok">
+				<option value="">-- Pilih Data --</option>
+				<?php
+					$arrBlok = array("F" => "F", "C1" => "C1", "C2" => "C2", "C3" => "C3", "C4" => "C4", "D" => "D");
+					foreach ($arrBlok as $key => $value) {
+						echo '<option value="' . $key . '">' . $value . '</option>';
+					}
+				?>
+			</select>
+			<font color="red">*</font>
+		</p>
+
+		<p>
+			<label>Baris</label>
+			<input class="required" type="text" id="baris" autocomplete="disable" name="baris"/>
+			<font color="red">*</font>
+		</p>
+
+		<p>
+			<label>Kursi</label>
+			<input class="required" type="text" id="kursi" autocomplete="disable" name="kursi" />
+			<font color="red">*</font>
+		</p>
+
+		<!-- <p><label>Nama Anggota</label>
+			<input readonly class="required" type="text" id="nama_anggota" autocomplete="disable" name="nama_anggota" value="<?= $this->row->nama_anggota; ?>" />
+			<input class="required" type="hidden" id="id_anggota" autocomplete="disable" name="id_anggota" value="<?= $this->row->id_anggota; ?>" />
+			<input type="button" value="..." id="btnAnggota" onclick="jQuery.facebox({ ajax: '/admin/denah-duduk/search-anggota'});" />
+			<input type="button" onclick="ClearFields1();" value="Clear" />
+			<font color="red">*</font>
+		</p> -->
+
+		<p>
+			<label>No Anggota</label>
+			<input class="required" type="text" id="no_anggota" autocomplete="disable" name="no_anggota" />
+			<font color="red">*</font>
+		</p>
+
+		<p>
+			<label>Fraksi Anggota</label>
+			<select id="fraksi_anggota" name="fraksi_anggota" style="width: 295px; font-size: 12.5px; border: 1px solid lightblue; padding-left: 0px;">
+				<option value="Fraksi Partai Amanat Nasional">Fraksi Partai Amanat Nasional</option>
+				<option value="Fraksi Partai Demokrat">Fraksi Partai Demokrat</option>
+				<option value="Fraksi Partai NasDem">Fraksi Partai NasDem</option>
+				<option value="Fraksi Partai Golongan Karya">Fraksi Partai Golongan Karya</option>
+				<option value="Fraksi Partai Demokrasi Indonesia Perjuangan">Fraksi Partai Demokrasi Indonesia Perjuangan</option>
+				<option value="Fraksi Partai Gerakan Indonesia Raya">Fraksi Partai Gerakan Indonesia Raya</option>
+				<option value="Fraksi Partai Kebangkitan Bangsa">Fraksi Partai Kebangkitan Bangsa</option>
+				<option value="Fraksi Partai Keadilan Sejahtera">Fraksi Partai Keadilan Sejahtera</option>
+				<option value="Fraksi Partai Persatuan Pembangunan">Fraksi Partai Persatuan Pembangunan</option>
+				<option value="Dewan Perwakilan Daerah">Dewan Perwakilan Daerah</option>
+			</select>
+			<font color="red">*</font>
+		</p>
+
+		<p>
+			<label>Lembaga</label>
+			<input class="required" type="text" id="lembaga" autocomplete="disable" name="lembaga" />
+			<font color="red">*</font>
+		</p>
+
+		<p>
+			<label>Link Undangan</label>
+			<input readonly type="text" name="undangan" value="https://belajar.dpr.go.id/sidang/index/seat/no-anggota/<?= strtolower(trim($this->row->no_anggota)) ?>/sesi/<?= $this->row->id_sidang ?>">
+			<font color="red">*</font>
+		</p>
+
+		<p class="savecancel"><label class="UIbutton-small"><input type="submit" value="Simpan" class="" /></label><a href="/sidang/denah-duduk" class="UIbutton-small">Batal</a></p>
+	</div>
+</form>
+<div style="clear:both"></div>
+
+<script>
+  function updateUndanganLink() {
+    var id_sidang = document.getElementById("id_sidang").value;
+    var no_anggota = document.getElementById("no_anggota").value;
+    var undanganLink = document.getElementsByName("undangan")[0];
+
+    undanganLink.value = "https://belajar.dpr.go.id/sidang/index/seat/no-anggota/" + no_anggota + "/sesi/" + id_sidang;
+  }
+
+  // Memanggil fungsi updateUndanganLink saat nilai input berubah
+  document.getElementById("id_sidang").addEventListener("input", updateUndanganLink);
+  document.getElementById("no_anggota").addEventListener("input", updateUndanganLink);
+</script>

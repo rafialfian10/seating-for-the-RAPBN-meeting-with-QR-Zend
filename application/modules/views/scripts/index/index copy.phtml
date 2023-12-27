@@ -1,0 +1,197 @@
+<?
+$kursi = 0;
+?>
+<table>
+	<tr>
+		<th>BLOK F</th>
+		<th>&nbsp;</th>
+		<th>BLOK C1</th>
+		<th>&nbsp;</th>
+		<th>BLOK C2</th>
+		<th>&nbsp;</th>
+		<th>BLOK C3</th>
+		<th>&nbsp;</th>
+		<th>BLOK C4</th>
+		<th>&nbsp;</th>
+		<th>BLOK D</th>
+	</tr>
+	<tr>
+		<td valign="top">
+			<table border="1" dir="rtl">
+				<?
+				$f = array(null, 10,12,12,14,8,7,7,8,7,7,7,7,6,5,4,3);
+				for($baris=1; $baris<=16; $baris++)
+				{
+					for($kolom=$f[$baris]; $kolom>=1; $kolom--)
+					{
+						if ($kolom == $f[$baris])
+						{
+							echo '<tr>';
+						}
+						
+						if ($baris < 13)
+							echo '<td>' . $kolom . '</td>';
+						else
+							echo '<td align="center">E</td>';
+
+						if ($kolom == 1) 
+						{
+							echo '</tr>';
+						}		
+					}
+				}
+				echo '</tr>';
+				?>
+			</table>
+		</td>
+		<td>&nbsp;</td>
+		<td valign="top">
+			<table border="1" dir="rtl">
+				<?
+				$c1 = array(null, 6,7,8,8,8,9,9,9,9,10,10,10,11,9,11,11,9);
+				for($baris=1; $baris<=17; $baris++)
+				{
+					for($kolom=$c1[$baris]; $kolom>=1; $kolom--)
+					{
+						if ($kolom == $c1[$baris])
+						{
+							echo '<tr>';
+						}
+						
+						if ($baris < 15)
+							echo '<td>' . $kolom . '</td>';
+						else
+							echo '<td align="center">E</td>';
+
+						if ($kolom == 1) 
+						{
+							echo '</tr>';
+						}		
+					}
+				}
+				echo '</tr>';
+				?>
+			</table>
+		</td>
+		<td>&nbsp;</td>
+		<td valign="top">
+			<table border="1" dir="rtl">
+				<?
+				$c2 = array(null, 6,7,7,8,8,9,9,9,10,10,10,10,11,11,11,11,9);
+				for($baris=1; $baris<=17; $baris++)
+				{
+					for($kolom=$c2[$baris]; $kolom>=1; $kolom--)
+					{
+						if ($kolom == $c2[$baris])
+						{
+							echo '<tr>';
+						}
+						
+						if ($baris < 15)
+							echo '<td>' . $kolom . '</td>';
+						else
+							echo '<td align="center">E</td>';
+
+						if ($kolom == 1) 
+						{
+							echo '</tr>';
+						}		
+					}
+				}
+				echo '</tr>';
+				?>
+			</table>
+		</td>
+		<td>
+			<img src="<?=$this->url_berkas;?>/arrow.jpg">
+		</td>
+		<td valign="top">
+			<table border="1">
+				<?
+				$c3 = array(null, 6,7,8,8,8,9,9,9,10,10,10,10,11,10,11,12,9);
+				for($baris=1; $baris<=17; $baris++)
+				{
+					for($kolom=1; $kolom<=$c3[$baris]; $kolom++)
+					{
+						if ($kolom == 1)
+						{
+							echo '<tr>';
+						}
+						
+						if ($baris < 15)
+							echo '<td>' . $kolom . '</td>';
+						else
+							echo '<td align="center">E</td>';
+
+						if ($kolom == $c3[$baris]) 
+						{
+							echo '</tr>';
+						}		
+					}
+				}
+				echo '</tr>';
+				?>
+			</table>
+		</td>
+		<td>&nbsp;</td>
+		<td valign="top">
+			<table border="1">
+				<?
+				$c4 = array(null, 6,7,8,8,8,8,9,9,10,10,9,11,10,8,11,11,9);
+				for($baris=1; $baris<=17; $baris++)
+				{
+					for($kolom=1; $kolom<=$c4[$baris]; $kolom++)
+					{
+						if ($kolom == 1)
+						{
+							echo '<tr>';
+						}
+						
+						if ($baris < 15)
+							echo '<td>' . $kolom . '</td>';
+						else
+							echo '<td align="center">E</td>';
+
+						if ($kolom == $c4[$baris]) 
+						{
+							echo '</tr>';
+						}		
+					}
+				}
+				echo '</tr>';
+				?>
+			</table>
+		</td>
+		<td>&nbsp;</td>
+		<td valign="top">
+			<table border="1">
+				<?
+				$d = array(null, 9,12,13,14,7,8,8,7,7,7,5,5,7,5,4,3);
+				for($baris=1; $baris<=16; $baris++)
+				{
+					for($kolom=1; $kolom<=$d[$baris]; $kolom++)
+					{
+						if ($kolom == 1)
+						{
+							echo '<tr>';
+						}
+						
+						if ($baris < 15)
+							echo '<td>' . $kolom . '</td>';
+						else
+							echo '<td align="center">E</td>';
+
+						if ($kolom == $d[$baris]) 
+						{
+							echo '</tr>';
+						}		
+					}
+				}
+				echo '</tr>';
+				?>
+			</table>
+		</td>
+	</tr>
+</table>
+
+	
